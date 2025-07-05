@@ -20,7 +20,13 @@ def emo_detector():
     dominant_emotion_name = response.get('dominant_emotion')
 
     # Return a formatted string with the emotion labels and scores
-    return f"For the given statement, the system response is 'anger': {anger_score}, 'disgust': {disgust_score}, 'fear': {fear_score}, 'joy': {joy_score} and 'sadness': {sadness_score}. The dominant emotion is {dominant_emotion_name}."
+    return f"""For the given statement, the system response is 
+    'anger': {anger_score},
+     'disgust': {disgust_score},
+      'fear': {fear_score},
+       'joy': {joy_score}
+        and 'sadness': {sadness_score}. 
+        The dominant emotion is {BOLD}{dominant_emotion_name}{END}."""
 
 @app.route("/")
 def render_index_page():
@@ -28,4 +34,4 @@ def render_index_page():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-            
+
