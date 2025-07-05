@@ -28,17 +28,17 @@ def emotion_detector(text_to_analyse):
         first_prediction = emotion_predictions[0]
 
         # Access the 'emotion' dictionary within that item
-        target_emotion_scores = first_prediction.get('emotion')
+        emotion_scores = first_prediction.get('emotion')
 
-        # Now, extract the individual scores (if needed) or use the dictionary directly
-        anger_score = target_emotion_scores.get('anger')
-        disgust_score = target_emotion_scores.get('disgust')
-        fear_score = target_emotion_scores.get('fear')
-        joy_score = target_emotion_scores.get('joy')
-        sadness_score = target_emotion_scores.get('sadness')
+        # Extract the individual scores
+        anger_score = emotion_scores.get('anger')
+        disgust_score = emotion_scores.get('disgust')
+        fear_score = emotion_scores.get('fear')
+        joy_score = emotion_scores.get('joy')
+        sadness_score = emotion_scores.get('sadness')
 
         # Construct the output dictionary
-        output_dictionary = {
+        emotion_dictionary = {
             'anger': anger_score,
             'disgust': disgust_score,
             'fear': fear_score,
@@ -52,13 +52,13 @@ def emotion_detector(text_to_analyse):
         # The dictionary's .items() method is used, which gives (key, value) pairs.
         # The 'key=lambda item: item[1]' tells the max() function to compare based on the value (item[1])
         # rather than the key (item[0]).
-        dominant_emotion_name = max(output_dictionary.items(), key=lambda item: item[1])[0]
+        dominant_emotion_name = max(emotion_dictionary.items(), key=lambda item: item[1])[0]
 
         # Add the dominant_emotion to the dictionary
-        output_dictionary['dominant_emotion'] = dominant_emotion_name
+        emotion_dictionary['dominant_emotion'] = dominant_emotion_name
 
-        # Return the customized output dictionary
-        return output_dictionary
+        # Return the customized emotion dictionary
+        return emotion_dictionary
     else:
         return {'Error': 'Could not find emotionPredictions or it was empty in the source dictionary.'}
 
