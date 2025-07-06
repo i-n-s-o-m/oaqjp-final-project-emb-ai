@@ -19,11 +19,13 @@ def emotion_detector(text_to_analyse):
     # Parsing the JSON response from the API
     formatted_response = json.loads(response.text)
 
+
+
     # Access the 'emotionPredictions' list
     emotion_predictions = formatted_response.get('emotionPredictions')
 
-    # Check if the list exists and is not empty
-    if emotion_predictions and len(emotion_predictions) > 0:
+    # If the response status code is 200, extract the label and score from the response
+    if response.status_code == 200:
         # Access the first item in the 'emotionPredictions' list
         first_prediction = emotion_predictions[0]
 
@@ -56,10 +58,17 @@ def emotion_detector(text_to_analyse):
 
         # Add the dominant_emotion to the dictionary
         emotion_dictionary['dominant_emotion'] = dominant_emotion_name
-
-        # Return the customized emotion dictionary
-        return emotion_dictionary
-    else:
-        return {'Error': 'Could not find emotionPredictions or it was empty in the source dictionary.'}
-
     
+    # If the response status code is 400, set same dictionary, but all values to None
+    elif response.status_code == 400:
+        # Construct the output dictionary
+        emotion_dictionary = {
+            'anger': 'None',
+            'disgust': 'None',
+            'fear': 'None',
+            'joy': 'None',
+            'sadness': 'None'
+        }
+
+    # Return the customized emotion dictionary
+    return emotion_dictionary

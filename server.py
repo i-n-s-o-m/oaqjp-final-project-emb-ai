@@ -19,14 +19,18 @@ def emo_detector():
     sadness_score = response.get('sadness')
     dominant_emotion_name = response.get('dominant_emotion')
 
-    # Return a formatted string with the emotion labels and scores
-    return f"""For the given statement, the system response is 
-    'anger': {anger_score},
-     'disgust': {disgust_score},
-      'fear': {fear_score},
-       'joy': {joy_score}
-        and 'sadness': {sadness_score}. 
-        The dominant emotion is {dominant_emotion_name}."""
+    # Check if the anger_score is None, indicating an error or invalid input
+    if anger_score == 'None':
+        return "Invalid text! Please try again!"
+    else:    
+        # Return a formatted string with the emotion labels and scores
+        return f"""For the given statement, the system response is 
+        'anger': {anger_score},
+         'disgust': {disgust_score},
+          'fear': {fear_score},
+           'joy': {joy_score}
+            and 'sadness': {sadness_score}. 
+            The dominant emotion is {dominant_emotion_name}."""
 
 @app.route("/")
 def render_index_page():
